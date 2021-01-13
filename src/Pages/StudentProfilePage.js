@@ -103,11 +103,11 @@ export default class Studentprofilepage extends Component {
 
     // const currentUser = AuthService.getCurrentUser();
 
-    // const {availableFaculties ,  availableDepartments } = this.state;
+    const {availableFaculties ,  availableDepartments ,departmentId } = this.state;
 
-    // const userdepartment = availableDepartments.filter(
-    //   (department) => department.departmentId == currentUser.departmentId
-    // );
+    const userdepartment = availableDepartments.filter(
+      (department) => department.departmentId == "D5"
+    );
 
     // const dep = userdepartment.filter(
     //   (depa) => depa.departmentName == userdepartment.departmentName
@@ -159,7 +159,7 @@ export default class Studentprofilepage extends Component {
                       {this.state.firstName} 
                       </h3>
                       <p className="text-muted text-center">
-                      Student
+                      Student 
                       </p>
                       <ul className="list-group list-group-unbordered mb-3">
                         <li className="list-group-item">
@@ -178,7 +178,7 @@ export default class Studentprofilepage extends Component {
                           <strong>
                             <i className="fas fa-book mr-1" /> Department
                           </strong>
-                          <p className="text-muted">{this.state.departmentId}</p>
+                          <p className="text-muted">{this.state.departmentId} {userdepartment.departmentId}</p>
                         </li>
                         <li className="list-group-item">
                           <strong>
