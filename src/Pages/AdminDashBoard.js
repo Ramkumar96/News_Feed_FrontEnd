@@ -43,8 +43,6 @@ export default class Admindashboard extends Component {
       <div>
         {/* Navbar */}
         <Profileheader />
-        {/* /.navbar */}
-        {/* Content Wrapper. Contains page content */}
         <div>
           {/* Content Header (Page header) */}
           <section className="content-header">
@@ -82,9 +80,6 @@ export default class Admindashboard extends Component {
                         />
                       </div>
                       <h3 className="profile-username text-center">Admin</h3>
-                      {/* <p className="text-muted text-center">
-                        Software Engineer
-                      </p> */}
                       <ul className="list-group list-group-unbordered mb-3">
                         <li className="list-group-item">
                           <strong>
@@ -100,9 +95,6 @@ export default class Admindashboard extends Component {
                           <p className="text-muted">{this.state.district}</p>
                         </li>
                       </ul>
-                      {/* <a href="#" className="btn btn-primary btn-block">
-                        <b>Follow</b>
-                      </a> */}
                     </div>
                     {/* /.card-body */}
                   </div>
@@ -149,10 +141,10 @@ export default class Admindashboard extends Component {
                           <AdminUploadpost />
                         </div>
                         <div className="tab-pane" id="postlist">
-                         <Adminpostlist/>
+                          <Adminpostlist />
                         </div>
                         <div className="tab-pane" id="activeuserslist">
-                          <Adminuserslist/>
+                          <Adminuserslist />
                         </div>
                       </div>
                     </div>

@@ -18,7 +18,6 @@ export default class Notification extends Component {
       });
       console.log(response);
     });
-
     this.getUserDetails();
   }
 
@@ -37,29 +36,25 @@ export default class Notification extends Component {
     );
 
     const deletedPosts = usersPost.filter(
-        (postInfo) => postInfo.postDeletedByAdmin == true
-      );
-  
-      const acceptedPosts = usersPost.filter(
-        (postInfo) => postInfo.postAcceptedByAdmin == true
-      );
+      (postInfo) => postInfo.postDeletedByAdmin == true
+    );
 
-    
+    const acceptedPosts = usersPost.filter(
+      (postInfo) => postInfo.postAcceptedByAdmin == true
+    );
 
     return (
       <div className="timeline timeline-inverse">
-           {acceptedPosts &&
+        {acceptedPosts &&
           acceptedPosts.map((post, index) => {
             return (
               <div key={index}>
-                <i className="fas fa-comments bg-success" />
+                <i className="fas fa-comments bg-success"/>
                 <div className="timeline-item">
                   <h3 className="timeline-header">
-            <strong>{post.postTitle}</strong> Post is Accepted By Admin
+                    <strong>{post.postTitle}</strong> Post is Accepted By Admin
                   </h3>
-                  <div className="timeline-body">
-                  {post.content}
-                  </div>
+                  <div className="timeline-body">{post.content}</div>
                 </div>
               </div>
             );
@@ -71,11 +66,9 @@ export default class Notification extends Component {
                 <i className="fas fa-comments bg-danger" />
                 <div className="timeline-item">
                   <h3 className="timeline-header">
-            <strong>{post.postTitle}</strong> Post is Deleted By Admin
+                    <strong>{post.postTitle}</strong> Post is Deleted By Admin
                   </h3>
-                  <div className="timeline-body">
-                  {post.content}
-                  </div>
+                  <div className="timeline-body">{post.content}</div>
                 </div>
               </div>
             );

@@ -17,8 +17,8 @@ export default class Registerpage extends Component {
       email: "",
       password: "",
       academicYear: null,
-      facultyId: null,
-      departmentId: null,
+      facultyName: null,
+      departmentName: null,
       acceptedByAdmin: false,
       rejectedByAdmin: false,
       resetPasswordToken: null,
@@ -53,8 +53,6 @@ export default class Registerpage extends Component {
 
       successful: false,
       message: "",
-      // availableCourses: [],
-      // availableDepartments: [],
       user: "",
     };
   }
@@ -84,7 +82,7 @@ export default class Registerpage extends Component {
 
   onChangeUserName = (e) => {
     this.setState({
-      userName : e.target.value,
+      userName: e.target.value,
     });
   };
   onChangePassword = (e) => {
@@ -101,64 +99,44 @@ export default class Registerpage extends Component {
       successful: false,
     });
 
-      console.log(
-        this.state.firstName,
-        this.state.lastName,
-        this.state.gender,
-        this.state.birthOfDate,
-        this.state.district,
-        this.state.address,
-        this.state.userName,
-        this.state.email,
-        this.state.password,
-        this.state.academicYear,
-        this.state.facultyId,
-        this.state.departmentId,
-        this.state.acceptedByAdmin,
-        this.state.rejectedByAdmin,
-        this.state.resetPasswordToken,
-        this.state.userRole
-        );
+    AuthService.register(
+      this.state.firstName,
+      this.state.lastName,
+      this.state.gender,
+      this.state.birthOfDate,
+      this.state.district,
+      this.state.userName,
+      this.state.email,
+      this.state.password,
+      this.state.academicYear,
+      this.state.facultyName,
+      this.state.departmentName,
+      this.state.acceptedByAdmin,
+      this.state.rejectedByAdmin,
+      this.state.resetPasswordToken,
+      this.state.userRole
+    ).then(
+      (response) => {
+        this.setState({
+          message: response.data.message,
+          successful: true,
+        });
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
 
-      AuthService.register(
-        this.state.firstName,
-        this.state.lastName,
-        this.state.gender,
-        this.state.birthOfDate,
-        this.state.district,
-        this.state.userName,
-        this.state.email,
-        this.state.password,
-        this.state.academicYear,
-        this.state.facultyId,
-        this.state.departmentId,
-        this.state.acceptedByAdmin,
-        this.state.rejectedByAdmin,
-        this.state.resetPasswordToken,
-        this.state.userRole
-      ).then(
-        (response) => {
-          this.setState({
-            message: response.data.message,
-            successful: true,
-          });
-        },
-        (error) => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-
-          this.setState({
-            successful: false,
-            message: resMessage,
-          });
-        }
-      );
+        this.setState({
+          successful: false,
+          message: resMessage,
+        });
+      }
+    );
   };
-
 
   render() {
     return (
@@ -172,136 +150,115 @@ export default class Registerpage extends Component {
               <p className="login-box-msg">Register a new membership</p>
               {!this.state.successful && (
                 <div>
-                    <div className="input-group mb-3">
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="First name"
-                        name="firstname"
-                        value={this.state.firstName}
-                        onChange={this.onChangefirstName}
-                      />
-                      <div className="input-group-append">
-                        <div className="input-group-text">
-                          <span className="fas fa-user" />
-                        </div>
+                  <div className="input-group mb-3">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="First name"
+                      name="firstname"
+                      value={this.state.firstName}
+                      onChange={this.onChangefirstName}
+                    />
+                    <div className="input-group-append">
+                      <div className="input-group-text">
+                        <span className="fas fa-user" />
                       </div>
-                    </div>
-                    <div className="input-group mb-3">
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Last name"
-                        name="lastname"
-                        value={this.state.lastName}
-                        onChange={this.onChangelastName}
-                      />
-                      <div className="input-group-append">
-                        <div className="input-group-text">
-                          <span className="fas fa-user" />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="input-group mb-3">
-                      <select class="custom-select"
-                      value={this.state.district}
-                      onChange={this.onChangeDistrict}>
-                        <option district="">Select District</option>
-                        {this.state.DistrictList &&
-                          this.state.DistrictList.map((district, key) => (
-                            <option key={key} value={district}>
-                              {district}
-                            </option>
-                          ))}
-                      </select>
-                    </div>
-                    <div className="input-group mb-3">
-                      <input
-                        type="email"
-                        className="form-control"
-                        placeholder="Email"
-                        name="email"
-                        value={this.state.email}
-                        onChange={this.onChangeEmail}
-                      />
-                      <div className="input-group-append">
-                        <div className="input-group-text">
-                          <span className="fas fa-envelope" />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="input-group mb-3">
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="User name"
-                        name="username"
-                        value={this.state.userName}
-                        onChange={this.onChangeUserName}
-                      />
-                      <div className="input-group-append">
-                        <div className="input-group-text">
-                          <span className="fas fa-user" />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="input-group mb-3">
-                      <input
-                        type="password"
-                        className="form-control"
-                        placeholder="Password"
-                        name="password"
-                        value={this.state.password}
-                        onChange={this.onChangePassword}
-                      />
-                      <div className="input-group-append">
-                        <div className="input-group-text">
-                          <span className="fas fa-lock" />
-                        </div>
-                      </div>
-                    </div>
-                    {/* <div className="input-group mb-3">
-                  <input
-                    type="password"
-                    className="form-control"
-                    placeholder="Retype password"
-                  />
-                  <div className="input-group-append">
-                    <div className="input-group-text">
-                      <span className="fas fa-lock" />
                     </div>
                   </div>
-                </div> */}
-                    <div className="row">
-                      <div className="col-8">
-                        {/* <div className="icheck-primary">
-                      <input
-                        type="checkbox"
-                        id="agreeTerms"
-                        name="terms"
-                        defaultValue="agree"
-                      />
-                      <label htmlFor="agreeTerms">
-                        I agree to the <a href="#">terms</a>
-                      </label>
-                    </div> */}
+                  <div className="input-group mb-3">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Last name"
+                      name="lastname"
+                      value={this.state.lastName}
+                      onChange={this.onChangelastName}
+                    />
+                    <div className="input-group-append">
+                      <div className="input-group-text">
+                        <span className="fas fa-user" />
                       </div>
-                      {/* /.col */}
-                      <div className="col-4">
-                        <button
-                          type="submit"
-                          className="btn btn-primary btn-block"
-                          onClick={this.handleRegister}
-                        >
-                          Register
-                        </button>
-                      </div>
-                      {/* /.col */}
                     </div>
-                    <Link to="/login"  className="text-center">
+                  </div>
+
+                  <div className="input-group mb-3">
+                    <select
+                      class="custom-select"
+                      value={this.state.district}
+                      onChange={this.onChangeDistrict}
+                    >
+                      <option district="">Select District</option>
+                      {this.state.DistrictList &&
+                        this.state.DistrictList.map((district, key) => (
+                          <option key={key} value={district}>
+                            {district}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                  <div className="input-group mb-3">
+                    <input
+                      type="email"
+                      className="form-control"
+                      placeholder="Email"
+                      name="email"
+                      value={this.state.email}
+                      onChange={this.onChangeEmail}
+                    />
+                    <div className="input-group-append">
+                      <div className="input-group-text">
+                        <span className="fas fa-envelope" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="input-group mb-3">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="User name"
+                      name="username"
+                      value={this.state.userName}
+                      onChange={this.onChangeUserName}
+                    />
+                    <div className="input-group-append">
+                      <div className="input-group-text">
+                        <span className="fas fa-user" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="input-group mb-3">
+                    <input
+                      type="password"
+                      className="form-control"
+                      placeholder="Password"
+                      name="password"
+                      value={this.state.password}
+                      onChange={this.onChangePassword}
+                    />
+                    <div className="input-group-append">
+                      <div className="input-group-text">
+                        <span className="fas fa-lock" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-8">
+                    </div>
+                    {/* /.col */}
+                    <div className="col-4">
+                      <button
+                        type="submit"
+                        className="btn btn-primary btn-block"
+                        onClick={this.handleRegister}
+                      >
+                        Register
+                      </button>
+                    </div>
+                    {/* /.col */}
+                  </div>
+                  <Link to="/login" className="text-center">
                     I already have a membership
-                </Link>
+                  </Link>
                 </div>
               )}
               {this.state.message && (
@@ -317,12 +274,9 @@ export default class Registerpage extends Component {
                     {this.state.message}
                   </div>
                   <div>
-                    <Link  to="/login">
-                    Login to your Account
-                    </Link>
+                    <Link to="/login">Login to your Account</Link>
                   </div>
                 </div>
-                
               )}
             </div>
             {/* /.form-box */}

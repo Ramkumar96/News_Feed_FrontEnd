@@ -16,9 +16,6 @@ class PostService {
   getposts() {
     return axios.get(baseURL + "posts", { headers: authHeader() });
   }
-  // deletePosts(id) {
-  //   return axios.delete(baseURL + "posts/" + id, { headers: authHeader() });
-  // }
   
 }
 

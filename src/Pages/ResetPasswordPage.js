@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-import AuthService from "../services/auth.service";
 import resetPasswordService from "../services/resetPassword.service";
 
 import { Link } from "react-router-dom";

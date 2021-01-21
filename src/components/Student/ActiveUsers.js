@@ -6,7 +6,7 @@ export default class Activeusers extends Component {
     super(props);
 
     this.state = {
-      allUserDetails:[],
+      allUserDetails: [],
     };
   }
 
@@ -32,12 +32,14 @@ export default class Activeusers extends Component {
   }
 
   render() {
-
     const { allUserDetails } = this.state;
 
-    const ActiveUserDetails =  allUserDetails.filter((user) => 
-    user.roles[0].name == "ROLE_STUDENT" &&  user.acceptedByAdmin == true && user.rejectedByAdmin == false);
-
+    const ActiveUserDetails = allUserDetails.filter(
+      (user) =>
+        user.roles[0].name == "ROLE_STUDENT" &&
+        user.acceptedByAdmin == true &&
+        user.rejectedByAdmin == false
+    );
 
     return (
       <div>
@@ -79,18 +81,18 @@ export default class Activeusers extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                  {ActiveUserDetails &&
-                  ActiveUserDetails.map((user, index) => {
-                    return (
-                      <tr>
-                      <td>{user.firstname}</td>
-                      <td>{user.email}</td>
-                      <td>{user.academicYear}</td>
-                      <td>{user.facultyId}</td>
-                      <td>{user.departmentId}</td>
-                    </tr>
-                    );
-                  })}
+                    {ActiveUserDetails &&
+                      ActiveUserDetails.map((user, index) => {
+                        return (
+                          <tr>
+                            <td>{user.firstname}</td>
+                            <td>{user.email}</td>
+                            <td>{user.academicYear}</td>
+                            <td>{user.facultyName}</td>
+                            <td>{user.departmentName}</td>
+                          </tr>
+                        );
+                      })}
                   </tbody>
                 </table>
               </div>

@@ -32,39 +32,6 @@ class ResetPasswordService {
         });
   }
 
-//   logout() {
-//     localStorage.removeItem("user");
-//   }
-
-//   addUser(userid,firstname,lastname, mobile,address,username,email,password,courseId,departmentId,resetPasswordToken,role) {
-//     return axios.post(API_URL + "adduser", {
-//       userid,
-//       firstname,
-//       lastname,
-//       mobile,
-//       address,
-//       username,
-//       email,
-//       password,
-//       courseId,
-//       departmentId,
-//       resetPasswordToken,
-//       role
-//     });
-//   }
-
-//   register(username, email, password) {
-//     return axios.put(API_URL + "register", {
-//       username,
-//       email,
-//       password
-//     });
-//   }
-  
-//   getCurrentUser() {
-//     return JSON.parse(localStorage.getItem('user'));;
-//   }
-
 }
 
 export default new ResetPasswordService();

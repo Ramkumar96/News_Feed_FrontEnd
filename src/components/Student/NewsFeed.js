@@ -3,7 +3,6 @@ import PostService from "../../services/post.service";
 import AuthService from "../../services/auth.service";
 import CommentService from "../../services/comment.service";
 import LikeService from "../../services/like.service";
-import axios from "axios";
 
 const baseURL = "http://localhost:8080/post/";
 
@@ -12,22 +11,18 @@ export default class Newsfeed extends Component {
     super(props);
 
     this.state = {
-      currentUserId:"",
+      currentUserId: "",
       fileInfos: [],
-      allCommentInfos:[],
-      allLikeInfos:[],
+      allCommentInfos: [],
+      allLikeInfos: [],
 
       commentContent: "",
       commentedPostId: "",
       commentedUserId: "",
       commentedFirstName: "",
 
-      likedPostId:"",
-      likedUserId:"",
-
-      // userMail: "",
-      // userId: "",
-      // firstname: "",
+      likedPostId: "",
+      likedUserId: "",
 
       postTitle: "",
       content: "",
@@ -59,26 +54,23 @@ export default class Newsfeed extends Component {
       });
       console.log(response);
     });
-
     this.getUserDetails();
   }
 
   getUserDetails = () => {
     const currentUser = AuthService.getCurrentUser();
-
     this.setState({
       commentedUserId: currentUser.id,
       commentedFirstName: currentUser.firstname,
-      likedUserId : currentUser.id,
-      currentUserId : currentUser.id,
+      likedUserId: currentUser.id,
+      currentUserId: currentUser.id,
     });
   };
 
-  onChangeCommentContent = (postId , e) => {
+  onChangeCommentContent = (postId, e) => {
     this.setState({
-      commentContent: e.target.value ,
+      commentContent: e.target.value,
       commentedPostId: postId,
-
     });
   };
 
@@ -88,7 +80,6 @@ export default class Newsfeed extends Component {
     this.setState({
       message: "",
       successful: false,
-      // commentedPostId: postId,
     });
 
     console.log(
@@ -101,9 +92,9 @@ export default class Newsfeed extends Component {
     let formData = new FormData();
 
     let commentContent = this.state.commentContent;
-    let commentedPostId =   this.state.commentedPostId;
-    let commentedUserId =  this.state.commentedUserId;
-    let commentedFirstName =  this.state.commentedFirstName;
+    let commentedPostId = this.state.commentedPostId;
+    let commentedUserId = this.state.commentedUserId;
+    let commentedFirstName = this.state.commentedFirstName;
 
     formData.append("commentContent", commentContent);
     formData.append("commentedPostId", commentedPostId);
@@ -133,27 +124,22 @@ export default class Newsfeed extends Component {
           message: resMessage,
         });
       }
-      
     );
   };
 
   onhandlePostLikes = (postId) => {
     // e.preventDefault();
-
     this.setState({
       message: "",
       successful: false,
     });
 
-    console.log(
-      postId,
-      this.state.likedUserId,
-    );
+    console.log(postId, this.state.likedUserId);
 
     let formData = new FormData();
 
     let likedPostId = postId;
-    let likedUserId =   this.state.likedUserId;
+    let likedUserId = this.state.likedUserId;
 
     formData.append("likedPostId", likedPostId);
     formData.append("likedUserId", likedUserId);
@@ -181,12 +167,16 @@ export default class Newsfeed extends Component {
           message: resMessage,
         });
       }
-      
     );
   };
 
   render() {
-    const { fileInfos , allCommentInfos , allLikeInfos , currentUserId } = this.state;
+    const {
+      fileInfos,
+      allCommentInfos,
+      allLikeInfos,
+      currentUserId,
+    } = this.state;
 
     const FinalNewsFeedPost = fileInfos.filter(
       (fileInfo) =>
@@ -195,21 +185,26 @@ export default class Newsfeed extends Component {
         fileInfo.postDeletedByUser == false
     );
 
-
     return (
       <div>
         {FinalNewsFeedPost &&
           FinalNewsFeedPost.map((post, index) => {
-
             // Calculating number of comments
-            const postComment = allCommentInfos.filter((commentInfo) =>commentInfo.commentedPostId == post.id);
+            const postComment = allCommentInfos.filter(
+              (commentInfo) => commentInfo.commentedPostId == post.id
+            );
             const postCount = postComment.length;
-
             // Calculating number of like
-            const postLikes = allLikeInfos.filter((LikeInfo) =>LikeInfo.likedPostId == post.id);
+            const postLikes = allLikeInfos.filter(
+              (LikeInfo) => LikeInfo.likedPostId == post.id
+            );
             const LikeCount = postLikes.length;
 
-            const currentuserliked = allLikeInfos.filter((LikeInfo) => LikeInfo.likedPostId == post.id && LikeInfo.likedUserId == currentUserId);
+            const currentuserliked = allLikeInfos.filter(
+              (LikeInfo) =>
+                LikeInfo.likedPostId == post.id &&
+                LikeInfo.likedUserId == currentUserId
+            );
             const IsUserLiked = currentuserliked.length;
 
             return (
@@ -241,49 +236,49 @@ export default class Newsfeed extends Component {
                   </a>
                 </p>
                 <p>
-
-                  <button className="link-black text-sm" 
-                  onClick={()=>this.onhandlePostLikes(post.id)}
-                  disabled={ IsUserLiked ==1 ? "true": "" } >
-                    <i className="far fa-thumbs-up mr-1" /> Like 
+                  <button
+                    className="link-black text-sm"
+                    onClick={() => this.onhandlePostLikes(post.id)}
+                    disabled={IsUserLiked == 1 ? "true" : ""}
+                  >
+                    <i className="far fa-thumbs-up mr-1" /> Like
                   </button>
                   {LikeCount} Likes
                   <span className="float-right">
                     <a href="#" className="link-black text-sm">
-                      <i className="far fa-comments mr-1" /> Comments ({postCount})
+                      <i className="far fa-comments mr-1" /> Comments (
+                      {postCount})
                     </a>
                   </span>
                 </p>
 
-                
                 <p>
-                {postComment &&
-                  postComment.map((comment, index) => {
-                    return (
-                      <div className="card-footer card-comments">
-                      {/* /.card-comment */}
-                      <div className="card-comment">
-                        {/* User image */}
-                        <img
-                          className="img-circle img-sm"
-                          src="../dist/img/user4-128x128.png"
-                          alt="User Image"
-                        />
-                        <div className="comment-text">
-                          <span className="username">
-                            {comment.commentedFirstName}
-                          </span>
-                          {/* /.username */}
-                          {comment.commentContent}
+                  {postComment &&
+                    postComment.map((comment, index) => {
+                      return (
+                        <div className="card-footer card-comments">
+                          {/* /.card-comment */}
+                          <div className="card-comment">
+                            {/* User image */}
+                            <img
+                              className="img-circle img-sm"
+                              src="../dist/img/user4-128x128.png"
+                              alt="User Image"
+                            />
+                            <div className="comment-text">
+                              <span className="username">
+                                {comment.commentedFirstName}
+                              </span>
+                              {/* /.username */}
+                              {comment.commentContent}
+                            </div>
+                            {/* /.comment-text */}
+                          </div>
+                          {/* /.card-comment */}
                         </div>
-                        {/* /.comment-text */}
-                      </div>
-                      {/* /.card-comment */}
-                    </div>
-                    );
-                  })}
+                      );
+                    })}
                 </p>
-
                 <div className="form-horizontal">
                   <div className="input-group input-group-sm mb-0">
                     <input

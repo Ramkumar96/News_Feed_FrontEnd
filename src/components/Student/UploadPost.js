@@ -6,9 +6,7 @@ var today = new Date();
 var date =
   today.getFullYear() + "/" + (today.getMonth() + 1) + "/" + today.getDate();
 
-
 export default class Uploadpost extends Component {
-
   constructor(props) {
     super(props);
     this.selectFile = this.selectFile.bind(this);
@@ -36,35 +34,20 @@ export default class Uploadpost extends Component {
     PostService.getposts().then((response) => {
       this.setState({
         fileInfos: response.data,
-        // userMail: currentUser.email,
-        // userId: currentUser.id,
-        // firstname: currentUser.firstname,
       });
-      // console.log( props.email);
-      // console.log( props.id);
     });
-
-    this.getUserDetails()
-
+    this.getUserDetails();
   }
 
   getUserDetails = () => {
-
     const currentUser = AuthService.getCurrentUser();
-    
+
     this.setState({
-      userId:currentUser.id,
+      userId: currentUser.id,
       firstname: currentUser.firstname,
-      // lastName: currentUser.lastname,
-      // gender: currentUser.gender,
-      // birthOfDate: currentUser.birthOfDate,
-      // district:currentUser.district,
       userMail: currentUser.email,
-      // academicYear: currentUser.academicYear,
-      // facultyId: currentUser.facultyId,
-      // departmentId: currentUser.departmentId, 
     });
-  }
+  };
 
   onChangePostTitle = (e) => {
     this.setState({
@@ -84,7 +67,6 @@ export default class Uploadpost extends Component {
     });
   }
 
-
   upload() {
     let currentFile = this.state.selectedFiles[0];
     this.setState({
@@ -94,7 +76,7 @@ export default class Uploadpost extends Component {
     let formData = new FormData();
 
     let userMail = this.state.userMail;
-    let userId =  this.state.userId;
+    let userId = this.state.userId;
     let firstname = this.state.firstname;
     let postTitle = this.state.postTitle;
     let content = this.state.content;
@@ -137,11 +119,8 @@ export default class Uploadpost extends Component {
     });
   }
 
-
   render() {
-
     const { selectedFiles, message } = this.state;
-
 
     return (
       <div>
@@ -195,10 +174,11 @@ export default class Uploadpost extends Component {
           </div>
           <div className="form-group row">
             <div className="offset-sm-2 col-sm-10">
-              <button type="submit" 
-              className="btn btn-success"
-              disabled={!selectedFiles}
-              onClick={this.upload}
+              <button
+                type="submit"
+                className="btn btn-success"
+                disabled={!selectedFiles}
+                onClick={this.upload}
               >
                 Create new Post
               </button>

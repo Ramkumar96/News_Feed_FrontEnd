@@ -23,7 +23,7 @@ class AuthService {
   }
 
   register(firstname,lastname,gender,birthOfDate,district, username,email,password,
-    academicYear, facultyId, departmentId,acceptedByAdmin,rejectedByAdmin, resetPasswordToken,role) {
+    academicYear, facultyName, departmentName,acceptedByAdmin,rejectedByAdmin, resetPasswordToken,role) {
     return axios.post(API_URL + "adduser", {
       firstname,
       lastname,
@@ -34,8 +34,8 @@ class AuthService {
       email,
       password,
       academicYear,
-      facultyId, 
-      departmentId,
+      facultyName, 
+      departmentName,
       acceptedByAdmin,
       rejectedByAdmin,
       resetPasswordToken,
@@ -43,8 +43,8 @@ class AuthService {
     });
   }
   
-  updateProfile(firstname, lastname, gender,birthOfDate,district,email,password,academicYear,facultyId,departmentId) {
-    return axios.put(API_URL + "register", {
+  updateProfile(firstname, lastname, gender,birthOfDate,district,email,password,academicYear,facultyName,departmentName) {
+    return axios.put(API_URL + "updateprofile", {
       firstname,
       lastname,
       gender,
@@ -53,8 +53,8 @@ class AuthService {
       email,
       password,
       academicYear,
-      facultyId,
-      departmentId
+      facultyName,
+      departmentName
     });
   }
   
@@ -62,7 +62,6 @@ class AuthService {
     return JSON.parse(localStorage.getItem('user'));;
   }
 
-  
   getAllUsers(){
     return axios.get(API_URL + 'allusers' , { headers: authHeader() } );
 }

@@ -6,7 +6,6 @@ var today = new Date();
 var date =
   today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
 
-
 export default class AdminUploadpost extends Component {
   constructor(props) {
     super(props);
@@ -21,7 +20,7 @@ export default class AdminUploadpost extends Component {
 
       userMail: "",
       userId: "",
-      firstname:"",
+      firstname: "",
 
       postTitle: "",
       content: "",
@@ -39,21 +38,17 @@ export default class AdminUploadpost extends Component {
       });
       console.log(response);
     });
-
-    this.getUserDetails()
-
+    this.getUserDetails();
   }
 
   getUserDetails = () => {
-
     const currentUser = AuthService.getCurrentUser();
-    
     this.setState({
-      userId:currentUser.id,
+      userId: currentUser.id,
       firstname: currentUser.firstname,
       userMail: currentUser.email,
     });
-  }
+  };
 
   onChangePostTitle = (e) => {
     this.setState({
@@ -72,7 +67,6 @@ export default class AdminUploadpost extends Component {
       selectedFiles: event.target.files,
     });
   }
-
 
   upload() {
     let currentFile = this.state.selectedFiles[0];
@@ -126,11 +120,8 @@ export default class AdminUploadpost extends Component {
     });
   }
 
-
   render() {
-
     const { selectedFiles, message } = this.state;
-
 
     return (
       <div>
@@ -184,10 +175,11 @@ export default class AdminUploadpost extends Component {
           </div>
           <div className="form-group row">
             <div className="offset-sm-2 col-sm-10">
-              <button type="submit" 
-              className="btn btn-success"
-              disabled={!selectedFiles}
-              onClick={this.upload}
+              <button
+                type="submit"
+                className="btn btn-success"
+                disabled={!selectedFiles}
+                onClick={this.upload}
               >
                 Create new Post
               </button>

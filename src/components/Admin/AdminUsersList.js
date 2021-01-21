@@ -20,8 +20,8 @@ export default class Adminuserslist extends Component {
       email: "",
       password: "",
       academicYear: "",
-      facultyId: "",
-      departmentId: "",
+      facultyName: "",
+      departmentName: "",
 
       acceptedByAdmin: true,
       rejectedByAdmin: true,
@@ -51,44 +51,39 @@ export default class Adminuserslist extends Component {
     );
   }
 
-  onRejectUser=(id) => {
+  onRejectUser = (id) => {
     const { rejectedByAdmin } = this.state;
     let formData = new FormData();
     formData.append("rejectedByAdmin", rejectedByAdmin);
-    axios.put(
-      baseURL + "rejectedByAdmin/" + id ,
-      formData )
-    .then((response) => {
+    axios.put(baseURL + "rejectedByAdmin/" + id, formData).then((response) => {
       this.setState({
         message: response.data.message,
       });
       window.location.reload();
-    })
-  }
+    });
+  };
 
   onAcceptUser = (id) => {
     const { acceptedByAdmin } = this.state;
     let formData = new FormData();
     formData.append("acceptedByAdmin", acceptedByAdmin);
-    axios.put(
-      baseURL + "acceptedByAdmin/" + id ,
-      formData )
-    .then((response) => {
+    axios.put(baseURL + "acceptedByAdmin/" + id, formData).then((response) => {
       this.setState({
         message: response.data.message,
       });
       window.location.reload();
-    })
-  }
+    });
+  };
 
   render() {
-
-    // const NonDeletedByAdminandUser = NonDeletedByUser.filter((file) => file.postDeletedByAdmin == false);
-
     const { allUserDetails } = this.state;
 
-    const AdminUserDetails =  allUserDetails.filter((user) => 
-    user.roles[0].name == "ROLE_STUDENT" && user.acceptedByAdmin == false && user.rejectedByAdmin == false);
+    const AdminUserDetails = allUserDetails.filter(
+      (user) =>
+        user.roles[0].name == "ROLE_STUDENT" &&
+        user.acceptedByAdmin == false &&
+        user.rejectedByAdmin == false
+    );
 
     return (
       <div className="content">
@@ -118,13 +113,17 @@ export default class Adminuserslist extends Component {
                         <td>{user.district}</td>
                         <td>{user.username}</td>
                         <td className="project-actions text-right">
-                          <a className="btn btn-info btn-sm" 
-                          onClick={()=>this.onAcceptUser(user.id)}>
+                          <a
+                            className="btn btn-info btn-sm"
+                            onClick={() => this.onAcceptUser(user.id)}
+                          >
                             <i className="fas fa-pencil-alt"></i>
                             Accept
                           </a>
-                          <a className="btn btn-danger btn-sm" 
-                           onClick={()=>this.onRejectUser(user.id)}>
+                          <a
+                            className="btn btn-danger btn-sm"
+                            onClick={() => this.onRejectUser(user.id)}
+                          >
                             <i className="fas fa-trash"></i>
                             Reject
                           </a>

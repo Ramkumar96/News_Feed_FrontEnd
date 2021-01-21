@@ -118,10 +118,6 @@ export default class Loginpage extends Component {
                 </div>
                 <div className="row">
                   <div className="col-8">
-                    {/* <div className="icheck-primary">
-                      <input type="checkbox" id="remember" />
-                      <label htmlFor="remember">Remember Me</label>
-                    </div> */}
                   </div>
                   {/* /.col */}
                   <div className="col-4">
@@ -140,7 +136,7 @@ export default class Loginpage extends Component {
               {this.state.message && (
                 <div className="form-group">
                   <div className="alert alert-danger" role="alert">
-              <p>{this.state.message}</p>
+                    <p>{this.state.message}</p>
                   </div>
                 </div>
               )}

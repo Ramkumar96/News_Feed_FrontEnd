@@ -8,7 +8,7 @@ export default class Updateprofile extends Component {
     super(props);
 
     this.state = {
-      id:"",
+      id: "",
       firstName: "",
       lastName: "",
       gender: "",
@@ -18,15 +18,15 @@ export default class Updateprofile extends Component {
       email: "",
       password: "",
       academicYear: "",
-      facultyId: "",
-      departmentId: "",
+      facultyName: "",
+      departmentName: "",
       currentUser: [],
 
-      message:"",
+      message: "",
 
       availableFaculties: [],
       availableDepartments: [],
-      allUserDetails:[],
+      allUserDetails: [],
       DistrictList: [
         "Kilinochchi",
         "Polonnaruwa",
@@ -82,7 +82,6 @@ export default class Updateprofile extends Component {
             error.toString(),
         });
       }
-      
     );
     // Getting All Departments
     DepartmentService.getAllDepartments().then(
@@ -101,8 +100,8 @@ export default class Updateprofile extends Component {
       }
     );
 
-     // Getting All Users
-     AuthService.getAllUsers().then(
+    // Getting All Users
+    AuthService.getAllUsers().then(
       (response) => {
         console.log(response.data);
         this.setState({
@@ -123,26 +122,25 @@ export default class Updateprofile extends Component {
     console.log(this.state.availableFaculties);
     console.log(this.state.availableDepartments);
 
-    this.getUserDetails()
+    this.getUserDetails();
   }
 
   getUserDetails = () => {
-
     const currentUser = AuthService.getCurrentUser();
-    
+
     this.setState({
-      id:currentUser.id,
+      id: currentUser.id,
       firstName: currentUser.firstname,
       lastName: currentUser.lastname,
       gender: currentUser.gender,
       birthOfDate: currentUser.birthOfDate,
-      district:currentUser.district,
+      district: currentUser.district,
       email: currentUser.email,
       academicYear: currentUser.academicYear,
-      facultyId: currentUser.facultyId,
-      departmentId: currentUser.departmentId, 
+      facultyName: currentUser.facultyName,
+      departmentName: currentUser.departmentName,
     });
-  }
+  };
 
   onChangefirstName = (e) => {
     this.setState({
@@ -184,15 +182,14 @@ export default class Updateprofile extends Component {
       academicYear: e.target.value,
     });
   };
-  onChangeFacultyId = (e) => {
+  onChangeFacultyName = (e) => {
     this.setState({
-      facultyId: e.target.value,
+      facultyName: e.target.value,
     });
-    console.log(this.state.facultyId);
   };
-  onChangeDepartmentId = (e) => {
+  onChangeDepartmentName = (e) => {
     this.setState({
-      departmentId: e.target.value,
+      departmentName: e.target.value,
     });
   };
 
@@ -204,66 +201,43 @@ export default class Updateprofile extends Component {
       successful: false,
     });
 
-    console.log(
+    AuthService.updateProfile(
       this.state.firstName,
-       this.state.lastName,
-       this.state.gender,
-       this.state.birthOfDate,
-       this.state.district,
-       this.state.email,
-       this.state.password,
-       this.state.academicYear,
-       this.state.facultyId,
-       this.state.departmentId,
+      this.state.lastName,
+      this.state.gender,
+      this.state.birthOfDate,
+      this.state.district,
+      this.state.email,
+      this.state.password,
+      this.state.academicYear,
+      this.state.facultyName,
+      this.state.departmentName
+    ).then(
+      (response) => {
+        this.setState({
+          message: response.data.message,
+          successful: true,
+        });
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+
+        this.setState({
+          successful: false,
+          message: resMessage,
+        });
+      }
     );
-
-      AuthService.updateProfile(
-       this.state.firstName,
-       this.state.lastName,
-       this.state.gender,
-       this.state.birthOfDate,
-       this.state.district,
-       this.state.email,
-       this.state.password,
-       this.state.academicYear,
-       this.state.facultyId,
-       this.state.departmentId,
-      ).then(
-        (response) => {
-          this.setState({
-            message: response.data.message,
-            successful: true,
-            // userReady: true,
-          });
-        },
-        (error) => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-
-          this.setState({
-            successful: false,
-            message: resMessage,
-          });
-        }
-      );
   };
 
   render() {
-
     const currentUser = AuthService.getCurrentUser();
-
     const { availableDepartments } = this.state;
-
-    const departmentlist = availableDepartments.filter(
-      (availabledepartment) =>
-    availabledepartment.facultyId == this.state.facultyId
-      );
-    
-
 
 
     return (
@@ -272,8 +246,6 @@ export default class Updateprofile extends Component {
           <div className="form-group row">
             <label htmlFor="inputName" className="col-sm-2 col-form-label">
               First Name
-              {/* {availableDepartments} */}
-              {/* {currentUser.firstname} */}
             </label>
             <div className="col-sm-10">
               <input
@@ -356,36 +328,20 @@ export default class Updateprofile extends Component {
               </select>
             </div>
           </div>
-{/* 
-          <div className="form-group row">
-            <label htmlFor="inputEmail" className="col-sm-2 col-form-label">
-              Email
-            </label>
-            <div className="col-sm-10">
-              <input
-                type="email"
-                className="form-control"
-                id="inputEmail"
-                placeholder="Email"
-                name="email"
-                value={this.state.email}
-                onChange={this.onChangeEmail}
-              />
-            </div>
-          </div> */}
           <div className="form-group row">
             <label htmlFor="inputName2" className="col-sm-2 col-form-label">
               Password
             </label>
             <div className="col-sm-10">
-              <input 
-              type="password" 
-              className="form-control" 
-              id="inputName2"
-              placeholder="Update your New Password"
-              name="password"
-              value={this.state.password}
-              onChange={this.onChangePassword} />
+              <input
+                type="password"
+                className="form-control"
+                id="inputName2"
+                placeholder="Update your New Password"
+                name="password"
+                value={this.state.password}
+                onChange={this.onChangePassword}
+              />
             </div>
           </div>
           <div className="form-group row">
@@ -409,7 +365,6 @@ export default class Updateprofile extends Component {
             </div>
           </div>
 
-  
           <div className="form-group row">
             <label
               htmlFor="inputExperience"
@@ -420,18 +375,17 @@ export default class Updateprofile extends Component {
             <div className="col-sm-10">
               <select
                 class="form-control input-sm m-bot15"
-                value={this.state.facultyId}
-                onChange={this.onChangeFacultyId}
+                value={this.state.facultyName}
+                onChange={this.onChangeFacultyName}
               >
-                <option facultyId=""> Select Faculty </option>
+                <option facultyName=""> Select Faculty </option>
                 {this.state.availableFaculties &&
                   this.state.availableFaculties.map((faculty, key) => (
-                    <option key={key} value={faculty.facultyId}>
+                    <option key={key} value={faculty.facultyName}>
                       {faculty.facultyName}
                     </option>
                   ))}
               </select>
-              
             </div>
           </div>
 
@@ -440,54 +394,53 @@ export default class Updateprofile extends Component {
               Department
             </label>
             <div className="col-sm-10">
-            <select
+              <select
                 class="form-control input-sm m-bot15"
-                value={this.state.departmentId}
-                onChange={this.onChangeDepartmentId}
+                value={this.state.departmentName}
+                onChange={this.onChangeDepartmentName}
               >
-                <option departmentId=""> Select Department </option>
-                {departmentlist &&
-                  departmentlist.map((department, key) => (
-                    <option key={key} value={department.departmentId}>
+                <option departmentName=""> Select Department </option>
+                {availableDepartments &&
+                  availableDepartments.map((department, key) => (
+                    <option key={key} value={department.departmentName}>
                       {department.departmentName}
                     </option>
                   ))}
               </select>
             </div>
           </div>
-        
+
           <div className="form-group row">
             <div className="offset-sm-2 col-sm-10">
               <div className="checkbox">
-                {/* <label>
-                  <input type="checkbox" /> I agree to the{" "}
-                  <a href="#">terms and conditions</a>
-                </label> */}
               </div>
             </div>
           </div>
           <div className="form-group row">
             <div className="offset-sm-2 col-sm-10">
-              <button type="submit" className="btn btn-success" onClick={this.handleUpdateProfile }>
+              <button
+                type="submit"
+                className="btn btn-success"
+                onClick={this.handleUpdateProfile}
+              >
                 Update Profile
               </button>
             </div>
           </div>
           {this.state.message && (
-                <div className="form-group">
-                  <div
-                    className={
-                      this.state.successful
-                        ? "alert alert-success"
-                        : "alert alert-danger"
-                    }
-                    role="alert"
-                  >
-                    {this.state.message}
-                  </div>
-                </div>
-                
-              )}
+            <div className="form-group">
+              <div
+                className={
+                  this.state.successful
+                    ? "alert alert-success"
+                    : "alert alert-danger"
+                }
+                role="alert"
+              >
+                {this.state.message}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );

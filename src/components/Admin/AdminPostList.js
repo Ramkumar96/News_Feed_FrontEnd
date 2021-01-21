@@ -33,40 +33,42 @@ export default class Adminpostlist extends Component {
     });
   }
 
-  onDeletePost=(id) => {
+  onDeletePost = (id) => {
     const { PostDeletedByAdmin } = this.state;
     let formData = new FormData();
     formData.append("PostDeletedByAdmin", PostDeletedByAdmin);
-    axios.put(
-      baseURL + "posts/deletedByAdmin/" + id ,
-      formData )
-    .then((response) => {
-      this.setState({
-        message: response.data.message,
+    axios
+      .put(baseURL + "posts/deletedByAdmin/" + id, formData)
+      .then((response) => {
+        this.setState({
+          message: response.data.message,
+        });
+        window.location.reload();
       });
-      window.location.reload();
-    })
-  }
+  };
 
   onAcceptPost = (id) => {
     const { PostAcceptedByAdmin } = this.state;
     let formData = new FormData();
     formData.append("PostAcceptedByAdmin", PostAcceptedByAdmin);
-    axios.put(
-      baseURL + "posts/acceptedByAdmin/" + id ,
-      formData )
-    .then((response) => {
-      this.setState({
-        message: response.data.message,
+    axios
+      .put(baseURL + "posts/acceptedByAdmin/" + id, formData)
+      .then((response) => {
+        this.setState({
+          message: response.data.message,
+        });
+        window.location.reload();
       });
-      window.location.reload();
-    })
-  }
+  };
 
   render() {
     const { fileInfos } = this.state;
-    const NonDeletedByUser = fileInfos.filter( (fileInfo) => fileInfo.postDeletedByUser == false) ;
-    const NonDeletedByAdminandUser = NonDeletedByUser.filter((file) => file.postDeletedByAdmin == false);
+    const NonDeletedByUser = fileInfos.filter(
+      (fileInfo) => fileInfo.postDeletedByUser == false
+    );
+    const NonDeletedByAdminandUser = NonDeletedByUser.filter(
+      (file) => file.postDeletedByAdmin == false
+    );
 
     return (
       <div className="timeline timeline-inverse">
@@ -84,7 +86,7 @@ export default class Adminpostlist extends Component {
                     <a href="#">Post Title :</a> {post.postTitle}
                   </h3>
                   <div className="timeline-body">
-                  {post.content}
+                    {post.content}
                     <p mt-3>
                       <a href={post.url} class="link-black text-sm">
                         <i class="fas fa-link mr-1"></i> {post.name}
@@ -92,14 +94,18 @@ export default class Adminpostlist extends Component {
                     </p>
                   </div>
                   <div className="timeline-footer">
-                    <button className="btn btn-success btn-sm"
-                    disabled={ post.postAcceptedByAdmin ? "true":""}
-                    onClick={()=>this.onAcceptPost(post.id)}>
+                    <button
+                      className="btn btn-success btn-sm"
+                      disabled={post.postAcceptedByAdmin ? "true" : ""}
+                      onClick={() => this.onAcceptPost(post.id)}
+                    >
                       Accept
-                    </button >
-                    <button href="#" className="btn btn-danger btn-sm"
-                    // disabled={post.PostAcceptedByAdmin ? "true":""}
-                      onClick={()=>this.onDeletePost(post.id)}>
+                    </button>
+                    <button
+                      href="#"
+                      className="btn btn-danger btn-sm"
+                      onClick={() => this.onDeletePost(post.id)}
+                    >
                       Delete
                     </button>
                   </div>

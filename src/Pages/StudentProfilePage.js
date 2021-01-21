@@ -11,16 +11,12 @@ import Postlist from "../components/Student/PostList";
 import Newsfeed from "../components/Student/NewsFeed";
 import Notification from "../components/Student/Notification";
 
-
-
-
-
 export default class Studentprofilepage extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      id:"",
+      id: "",
       firstName: "",
       lastName: "",
       gender: "",
@@ -30,12 +26,11 @@ export default class Studentprofilepage extends Component {
       email: "",
       password: "",
       academicYear: "",
-      facultyId: "",
-      departmentId: "",
+      facultyName: "",
+      departmentName: "",
 
-      availableFaculties:[],
-      availableDepartments:[],
-
+      availableFaculties: [],
+      availableDepartments: [],
     };
   }
 
@@ -55,7 +50,6 @@ export default class Studentprofilepage extends Component {
             error.toString(),
         });
       }
-      
     );
     // Getting All Departments
     DepartmentService.getAllDepartments().then(
@@ -75,50 +69,32 @@ export default class Studentprofilepage extends Component {
       }
     );
 
-    this.getUserDetails()
-
+    this.getUserDetails();
   }
 
   getUserDetails = () => {
-
     const currentUser = AuthService.getCurrentUser();
-    
+
     this.setState({
-      id:currentUser.id,
+      id: currentUser.id,
       firstName: currentUser.firstname,
       lastName: currentUser.lastname,
       gender: currentUser.gender,
       birthOfDate: currentUser.birthOfDate,
-      district:currentUser.district,
+      district: currentUser.district,
       email: currentUser.email,
       academicYear: currentUser.academicYear,
-      facultyId: currentUser.facultyId,
-      departmentId: currentUser.departmentId, 
+      facultyName: currentUser.facultyName,
+      departmentName: currentUser.departmentName,
     });
-  }
+  };
 
-
- 
   render() {
-
-    // const currentUser = AuthService.getCurrentUser();
-
-    const {availableFaculties ,  availableDepartments ,departmentId } = this.state;
-
-    const userdepartment = availableDepartments.filter(
-      (department) => department.departmentId == "D5"
-    );
-
-    // const dep = userdepartment.filter(
-    //   (depa) => depa.departmentName == userdepartment.departmentName
-    // );
-
     return (
       <div>
         {/* Navbar */}
         <Profileheader />
         {/* /.navbar */}
-        {/* Content Wrapper. Contains page content */}
         <div>
           {/* Content Header (Page header) */}
           <section className="content-header">
@@ -156,29 +132,32 @@ export default class Studentprofilepage extends Component {
                         />
                       </div>
                       <h3 className="profile-username text-center">
-                      {this.state.firstName} 
+                        {this.state.firstName}
                       </h3>
-                      <p className="text-muted text-center">
-                      Student 
-                      </p>
+                      <p className="text-muted text-center">Student</p>
                       <ul className="list-group list-group-unbordered mb-3">
                         <li className="list-group-item">
                           <strong>
                             <i className="fas fa-book mr-1" /> Academic Year
                           </strong>
-                          <p className="text-muted ml-3">{this.state.academicYear} </p>
+                          <p className="text-muted ml-3">
+                            {this.state.academicYear}{" "}
+                          </p>
                         </li>
                         <li className="list-group-item">
                           <strong>
                             <i className="fas fa-book mr-1" /> Faculty
                           </strong>
-                          <p className="text-muted">{this.state.facultyId}</p>
+
+                          <p className="text-muted">{this.state.facultyName}</p>
                         </li>
                         <li className="list-group-item">
                           <strong>
                             <i className="fas fa-book mr-1" /> Department
                           </strong>
-                          <p className="text-muted">{this.state.departmentId} {userdepartment.departmentId}</p>
+                          <p className="text-muted">
+                            {this.state.departmentName}
+                          </p>
                         </li>
                         <li className="list-group-item">
                           <strong>
@@ -203,9 +182,7 @@ export default class Studentprofilepage extends Component {
                           <strong>
                             <i className="far fa-file-alt mr-1" /> Birth Of Date
                           </strong>
-                          <p className="text-muted">
-                          {this.state.birthOfDate}
-                          </p>
+                          <p className="text-muted">{this.state.birthOfDate}</p>
                         </li>
                       </ul>
                       <a href="#" className="btn btn-primary btn-block">
@@ -282,30 +259,32 @@ export default class Studentprofilepage extends Component {
                       <div className="tab-content">
                         <div className="active tab-pane" id="newsfeed">
                           {/* Post */}
-                          <Newsfeed/>
+                          <Newsfeed />
                         </div>
                         {/* /.tab-pane */}
                         {/* /.tab-pane */}
                         <div className="tab-pane" id="addnewpost">
-                         <Uploadpost userfirstname= {this.state.userFirstName}/>
+                          <Uploadpost
+                            userfirstname={this.state.userFirstName}
+                          />
                         </div>
                         {/* /.tab-pane */}
                         <div className="tab-pane" id="postlist">
                           {/* The timeline */}
-                         <Postlist/>
+                          <Postlist />
                         </div>
                         <div className="tab-pane" id="notification">
-                        <Notification/>
+                          <Notification />
                         </div>
                         {/* /.tab-pane */}
 
                         <div className="tab-pane" id="activeuserslist">
-                         <Activeusers/>
+                          <Activeusers />
                         </div>
                         {/* /.tab-pane */}
 
                         <div className="tab-pane" id="updateprofile">
-                                <Updateprofile/>
+                          <Updateprofile />
                         </div>
                         {/* /.tab-pane */}
                       </div>
@@ -324,7 +303,7 @@ export default class Studentprofilepage extends Component {
           {/* /.content */}
         </div>
         {/* /.content-wrapper */}
-        <footer className="main-footer">                           
+        <footer className="main-footer">
           ©Copyright <strong>SabaraTalkies</strong>. All Rights Reserved
         </footer>
         {/* Control Sidebar */}
