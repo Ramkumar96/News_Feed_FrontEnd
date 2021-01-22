@@ -21,18 +21,6 @@ export default class Profileheader extends Component {
             </div>
             <nav className="main-nav float-right d-none d-lg-block">
               <ul>
-                <li className="active">
-                  <a href="#">Home</a>
-                </li>
-                <li>
-                  <a href="#about">About Us</a>
-                </li>
-                <li>
-                  <a href="#services">Services</a>
-                </li>
-                <li>
-                  <a href="#team">Team</a>
-                </li>
                 <li>
                   <a href="/" onClick={this.logOut}>
                     Logout
